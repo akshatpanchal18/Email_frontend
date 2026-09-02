@@ -41,6 +41,8 @@ const Navbar = ({ isAuth }: { isAuth: boolean }) => {
           <Button
             type="button"
             onClick={handleLogout}
+            loading={isLoading}
+            disabled={isLoading}
             className="rounded-lg bg-black px-4 py-2 text-sm font-medium text-white transition hover:bg-gray-800"
           >
             logout

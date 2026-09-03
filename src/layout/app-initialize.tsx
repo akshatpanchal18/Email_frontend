@@ -1,4 +1,4 @@
-import { useEffect, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { useRestoreSessionQuery } from "../store/api/authApi";
 import { useAppDispatch } from "../hooks/redux";
 import { setToken, setUserType } from "../store/state";
@@ -10,19 +10,26 @@ interface AppInitializeProps {
 
 const AppInitialize = ({ children }: AppInitializeProps) => {
   const dispatch = useAppDispatch();
+  const [ready, setReady] = useState(false);
 
-  const { data, isLoading, isSuccess } = useRestoreSessionQuery();
+  const { data, isSuccess, isError } = useRestoreSessionQuery();
 
   useEffect(() => {
     if (isSuccess && data.success) {
       dispatch(setToken(data.data.token));
       dispatch(setUserType(data.data.type));
     }
-  }, [data, isSuccess, dispatch]);
-  if (isLoading) {
+
+    if (isSuccess || isError) {
+      setReady(true);
+    }
+  }, [isSuccess, isError, data, dispatch]);
+
+  if (!ready) {
     return <LazyLoader />;
   }
-  return !isLoading && children;
+
+  return children;
 };
 
 export default AppInitialize;

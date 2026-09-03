@@ -4,9 +4,14 @@ import PrivateLayout from "../layout/private-layout";
 import { lazy } from "react";
 import ProtectedRoute from "./protected-route";
 import PublicRoute from "./public-route";
+import Home from "../feature/home/pages/home";
+import Mailbox from "../feature/mailbox/pages/mailbox";
 
 const LoginPage = lazy(() => import("../feature/auth/pages/login"));
 const SignupPage = lazy(() => import("../feature/auth/pages/sign-up"));
+const DashboardPage = lazy(
+  () => import("../feature/dashboard/pages/dashboard"),
+);
 export const appRoutes = createBrowserRouter([
   {
     path: "/",
@@ -18,12 +23,12 @@ export const appRoutes = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <div>Home</div>,
+        element: <Home />,
       },
 
       {
         path: ":address",
-        element: <div>Address</div>,
+        element: <Mailbox />,
       },
       {
         path: "login",
@@ -45,11 +50,11 @@ export const appRoutes = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <div>Private Home</div>,
+        element: <DashboardPage />,
       },
       {
         path: ":address",
-        element: <div>address</div>,
+        element: <Mailbox />,
       },
     ],
   },

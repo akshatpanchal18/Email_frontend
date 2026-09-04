@@ -1,4 +1,3 @@
-import { LuDownload, LuFile, LuPaperclip } from "react-icons/lu";
 import type { EmailMessage } from "../../../store/api/mailboxApi";
 
 interface MessageDetailsProps {

@@ -13,11 +13,10 @@ import {
   type EmailMessage,
 } from "../../../store/api/mailboxApi";
 interface InboxProps {
-  address: string;
   mailboxId: string;
 }
 
-const Inbox = ({ address, mailboxId }: InboxProps) => {
+const Inbox = ({ mailboxId }: InboxProps) => {
   const dispatch = useAppDispatch();
   const {
     data: messages = [],
@@ -151,17 +150,17 @@ const Inbox = ({ address, mailboxId }: InboxProps) => {
 
         <button
           onClick={handleRefresh}
-          disabled={refreshing}
+          disabled={refreshing || isFetching}
           className="flex items-center gap-2 rounded-md border px-3 py-1.5 text-sm font-medium text-gray-700 transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-60"
         >
-          <LuRefreshCw size={15} className={refreshing ? "animate-spin" : ""} />
+          <LuRefreshCw size={15} className={isFetching ? "animate-spin" : ""} />
           Refresh
         </button>
       </div>
 
       {/* Message list */}
       <div className="min-h-0 flex-1 overflow-y-auto scrollbar-custom">
-        {messages.length > 0 ? (
+        {messages.length > 0 || isLoading ? (
           messages?.map((message) => (
             <MessageRow
               key={message.id}

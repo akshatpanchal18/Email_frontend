@@ -16,10 +16,7 @@ const Mailbox = () => {
   return (
     <>
       <AddressInfo address={mailbox?.address ?? address} loading={isLoading} />
-      <Inbox
-        address={mailbox?.address ?? address}
-        mailboxId={mailbox?.id ?? ""}
-      />
+      <Inbox mailboxId={mailbox?.id ?? ""} />
     </>
   );
 };

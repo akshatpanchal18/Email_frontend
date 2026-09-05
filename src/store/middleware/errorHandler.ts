@@ -4,14 +4,27 @@ import { toast } from "sonner";
 
 const includedEndpoints = ["login", "signup"];
 
-interface ErrorDetails {
-  message?: string;
+interface ApiErrorItem {
+  field?: string;
+  message: string;
+  code?: string;
+}
+
+interface ApiErrorResponse {
+  success: false;
+  status: number;
+  statusCode: string;
+  message: string;
+  errors: ApiErrorItem[];
 }
 
 interface ErrorPayload {
-  data?: {
-    message?: string;
-  };
+  status?: number;
+  data?: ApiErrorResponse;
+}
+
+interface ErrorDetails {
+  message?: string;
 }
 
 interface ErrorMetaArg {
@@ -35,15 +48,17 @@ export const errorMiddleware: Middleware = () => (next) => (action) => {
 
     const endpoint = rejectedAction.meta?.arg?.endpointName;
 
-    // Ignore everything that is not explicitly included
+    // Only handle explicitly included endpoints
     if (!endpoint || !includedEndpoints.includes(endpoint)) {
       return next(action);
     }
 
-    console.log("ERROR_HANDLER =>", rejectedAction.payload);
+    const errorResponse = rejectedAction.payload?.data;
+
+    console.log("ERROR_HANDLER =>", errorResponse);
 
     const message =
-      rejectedAction.payload?.data?.message ||
+      errorResponse?.message ||
       rejectedAction.error?.message ||
       "Something went wrong";
 

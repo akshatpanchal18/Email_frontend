@@ -41,6 +41,7 @@ const baseQueryWithAuth: BaseQueryFn<
 > = async (args, api, extraOptions) => {
   // 1. Normal protected request
   let result = await protectedBaseQuery(args, api, extraOptions);
+  console.log("BASE_QUERY", result.error);
 
   // 2. Token expired / unauthorized
   if (result.error?.status === 401) {

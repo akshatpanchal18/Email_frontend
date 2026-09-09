@@ -19,7 +19,7 @@ const AppInitialize = ({ children }: AppInitializeProps) => {
     if (isSuccess) {
       dispatch(setAuthStatus(data.status)); // 'anonymous' | 'authenticated'
       if (data.status === "authenticated") {
-        dispatch(setToken(data.accessToken!));
+        dispatch(setToken(data.token!));
         dispatch(setUser(data.user!));
       }
     }

@@ -13,7 +13,7 @@ const PrivateLayout = () => {
       <div className="lg:pl-72">
         <Header onMenuClick={() => setSidebarOpen(true)} />
 
-        <main className="min-h-[calc(100vh-64px)] p-4 md:p-6 lg:p-8">
+        <main className="min-h-[calc(100vh-64px)] p-4 md:p-2 lg:p-2">
           <Outlet />
         </main>
       </div>

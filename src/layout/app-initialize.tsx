@@ -1,7 +1,7 @@
 import { useEffect, useState, type ReactNode } from "react";
-import { useRestoreSessionQuery } from "../store/api/authApi";
+import { useInitializeQuery } from "../store/api/authApi";
 import { useAppDispatch } from "../hooks/redux";
-import { setToken, setUserType } from "../store/state";
+import { setAuthStatus, setToken, setUser } from "../store/reducer/auth";
 import LazyLoader from "../components/lazyLoader";
 
 interface AppInitializeProps {
@@ -12,19 +12,19 @@ const AppInitialize = ({ children }: AppInitializeProps) => {
   const dispatch = useAppDispatch();
   const [ready, setReady] = useState(false);
 
-  const { data, isSuccess, isError } = useRestoreSessionQuery();
+  // AppInitialize.tsx
+  const { data, isSuccess, isError } = useInitializeQuery();
 
   useEffect(() => {
-    if (isSuccess && data.success) {
-      dispatch(setToken(data.data.token));
-      dispatch(setUserType(data.data.type));
+    if (isSuccess) {
+      dispatch(setAuthStatus(data.status)); // 'anonymous' | 'authenticated'
+      if (data.status === "authenticated") {
+        dispatch(setToken(data.accessToken!));
+        dispatch(setUser(data.user!));
+      }
     }
-
-    if (isSuccess || isError) {
-      setReady(true);
-    }
+    if (isSuccess || isError) setReady(true);
   }, [isSuccess, isError, data, dispatch]);
-
   if (!ready) {
     return <LazyLoader />;
   }

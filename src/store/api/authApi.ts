@@ -8,11 +8,18 @@ interface SessionResponse {
     token: string;
     type: "user" | "guest";
   };
-  //   user: {
-  //     id: string;
-  //     email: string;
-  //     name: string;
-  //   };
+}
+interface InitializeResponse {
+  success: boolean;
+  message: string;
+  data: {
+    status: "anonymous" | "authenticated";
+    accessToken?: string;
+    user?: {
+      id: string;
+      email: string;
+    };
+  };
 }
 const authApi = createApi({
   reducerPath: "authApi",
@@ -38,11 +45,9 @@ const authApi = createApi({
         body,
       }),
     }),
-    restoreSession: builder.query<SessionResponse, void>({
-      query: () => ({
-        url: "/auth/restore",
-        method: "GET",
-      }),
+    initialize: builder.query<InitializeResponse["data"], void>({
+      query: () => ({ url: "/auth/init", method: "GET" }),
+      transformResponse: (response: InitializeResponse) => response.data,
     }),
     logout: builder.query<void, void>({
       query: () => ({
@@ -56,8 +61,8 @@ const authApi = createApi({
 export const {
   useLoginMutation,
   useRegisterMutation,
-  useRestoreSessionQuery,
-  useLazyRestoreSessionQuery,
+  useInitializeQuery,
+  useLazyInitializeQuery,
   useLazyLogoutQuery,
 } = authApi;
 

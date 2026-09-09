@@ -7,7 +7,7 @@ import { Input } from "../../../components/ui/input";
 import { Button } from "../../../components/ui/button";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../../hooks/redux";
-import { setToken, setUserType } from "../../../store/state";
+import { setToken } from "../../../store/reducer/auth";
 
 const SignUp = () => {
   const dispatch = useAppDispatch();
@@ -32,7 +32,6 @@ const SignUp = () => {
       const response = await register(data).unwrap();
       if (response.success) {
         dispatch(setToken(response.data.token));
-        dispatch(setUserType(response.data.type));
         navigate("/dashboard");
       }
       console.log("register successful:", response);

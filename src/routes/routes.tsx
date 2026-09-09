@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router-dom";
 import PublicLayout from "../layout/public-layout";
 import PrivateLayout from "../layout/private-layout";
 import { lazy } from "react";
@@ -41,7 +41,7 @@ export const appRoutes = createBrowserRouter([
     ],
   },
   {
-    path: "/dashboard",
+    path: "/d",
     element: (
       <ProtectedRoute>
         <PrivateLayout />
@@ -53,9 +53,13 @@ export const appRoutes = createBrowserRouter([
         element: <DashboardPage />,
       },
       {
-        path: ":address",
-        element: <Mailbox />,
+        path: "inbox",
+        element: <div>Private inbox</div>,
       },
     ],
+  },
+  {
+    path: "*",
+    element: <Navigate to="/" replace />,
   },
 ]);

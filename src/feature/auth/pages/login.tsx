@@ -5,7 +5,7 @@ import { useLoginMutation } from "../../../store/api/authApi";
 import { Input } from "../../../components/ui/input";
 import { Button } from "../../../components/ui/button";
 import { NavLink, useNavigate } from "react-router-dom";
-import { setToken, setUserType } from "../../../store/state";
+import { setAuthStatus, setToken } from "../../../store/reducer/auth";
 import { useAppDispatch } from "../../../hooks/redux";
 import { loginSchema } from "../types/schema";
 
@@ -43,7 +43,7 @@ const Login = () => {
       }
 
       dispatch(setToken(response.data.token));
-      dispatch(setUserType(response.data.type));
+      dispatch(setAuthStatus(response.data.status));
 
       console.log("redirecting...");
 

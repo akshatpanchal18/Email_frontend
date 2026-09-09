@@ -3,15 +3,15 @@ import { useAppSelector } from "../hooks/redux";
 import type { PropsWithChildren } from "react";
 
 const PublicRoutes = ({ children }: PropsWithChildren) => {
-  const token = useAppSelector((state) => state.state.token);
+  const status = useAppSelector((state) => state.auth.status);
+
   const location = useLocation();
 
-  const authRoutes = ["/login", "/signup"];
+  const authRoutes = ["/login", "/signup", "/"];
 
   const isAuthRoute = authRoutes.includes(location.pathname);
-
-  if (token && isAuthRoute) {
-    return <Navigate to="/dashboard" replace />;
+  if (status === "authenticated" && isAuthRoute) {
+    return <Navigate to="/d/inbox" replace />;
   }
 
   return children;

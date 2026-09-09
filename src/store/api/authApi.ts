@@ -6,7 +6,7 @@ interface InitializeResponse {
   message: string;
   data: {
     status: "anonymous" | "authenticated";
-    accessToken?: string;
+    token?: string;
     user?: {
       id: string;
       email: string;

@@ -5,7 +5,7 @@ import { useLoginMutation } from "../../../store/api/authApi";
 import { Input } from "../../../components/ui/input";
 import { Button } from "../../../components/ui/button";
 import { NavLink, useNavigate } from "react-router-dom";
-import { setAuthStatus, setToken } from "../../../store/reducer/auth";
+import { setAuthStatus, setToken, setUser } from "../../../store/reducer/auth";
 import { useAppDispatch } from "../../../hooks/redux";
 import { loginSchema } from "../types/schema";
 
@@ -44,10 +44,11 @@ const Login = () => {
 
       dispatch(setToken(response.data.token));
       dispatch(setAuthStatus(response.data.status));
+      dispatch(setUser(response.data.user));
 
       console.log("redirecting...");
 
-      navigate("/dashboard", { replace: true });
+      navigate("/d/inbox", { replace: true });
     } catch (error) {
       console.error("Login failed:", error);
     }

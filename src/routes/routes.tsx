@@ -6,6 +6,7 @@ import ProtectedRoute from "./protected-route";
 import PublicRoute from "./public-route";
 import Home from "../feature/home/pages/home";
 import Mailbox from "../feature/mailbox/pages/mailbox";
+import PrivateInbox from "../feature/dashboard/pages/private-mailbox";
 
 const LoginPage = lazy(() => import("../feature/auth/pages/login"));
 const SignupPage = lazy(() => import("../feature/auth/pages/sign-up"));
@@ -50,11 +51,11 @@ export const appRoutes = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <DashboardPage />,
+        element: <PrivateInbox />,
       },
       {
         path: "inbox",
-        element: <div>Private inbox</div>,
+        element: <PrivateInbox />,
       },
     ],
   },

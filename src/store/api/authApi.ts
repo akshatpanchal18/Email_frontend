@@ -1,14 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 import { BASE_URL } from "../../config/setting";
-interface SessionResponse {
-  success: boolean;
-  message: string;
-  data: {
-    token: string;
-    type: "user" | "guest";
-  };
-}
 interface InitializeResponse {
   success: boolean;
   message: string;

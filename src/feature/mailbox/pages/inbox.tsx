@@ -10,8 +10,8 @@ import {
   mailBoxApi,
   useGetMyMessagesQuery,
   useMarkMessageAsReadMutation,
-  type EmailMessage,
 } from "../../../store/api/mailboxApi";
+import type { EmailMessage } from "../../../store/types/mailbox";
 interface InboxProps {
   mailboxId: string;
 }
@@ -133,7 +133,7 @@ const Inbox = ({ mailboxId }: InboxProps) => {
     setSelectedMessage(null);
   };
   return (
-    <div className="mx-auto my-6 flex h-125 w-full max-w-3xl flex-col overflow-hidden rounded-xl border bg-white shadow-sm">
+    <div className="mx-auto my-4 flex h-125 w-full max-w-3xl flex-col overflow-hidden rounded-xl border bg-white shadow-sm">
       {/* Header */}
       <div className="flex items-center justify-between border-b px-5 py-4">
         <div className="flex items-center gap-2">

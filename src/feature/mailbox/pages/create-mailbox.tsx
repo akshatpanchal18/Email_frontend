@@ -9,12 +9,9 @@ import { Button } from "../../../components/ui/button";
 import { Input } from "../../../components/ui/input";
 import type { CreateMailboxForm } from "../types/type";
 import { createMailboxSchema } from "../types/schema";
+import { useAppSelector } from "../../../hooks/redux";
 
 const DOMAIN = import.meta.env.VITE_DOMAIN_ADDRESS;
-
-interface CreateMailBoxProps {
-  isGuest?: boolean;
-}
 
 interface ApiValidationError {
   field?: string;
@@ -31,9 +28,10 @@ interface ApiError {
   data?: ApiErrorResponse;
 }
 
-const CreateMailbox: React.FC<CreateMailBoxProps> = ({ isGuest = true }) => {
+const CreateMailbox: React.FC = () => {
   const navigate = useNavigate();
-
+  const status = useAppSelector((s) => s.auth.status);
+  const isGuest = status === "anonymous";
   const [createAddress, { isLoading }] = useCreateMailAddressMutation();
 
   const {
@@ -55,12 +53,11 @@ const CreateMailbox: React.FC<CreateMailBoxProps> = ({ isGuest = true }) => {
       const response = await createAddress({
         address,
       }).unwrap();
+      console.log(response);
 
-      if (response?.success) {
-        if (isGuest) {
-          navigate(`/${address}`);
-        } else navigate(`/dashboard/${address}`);
-      }
+      if (status === "anonymous") {
+        navigate(`/${response.id}`);
+      } else navigate(`/dashboard/inbox`);
     } catch (error) {
       const apiError = error as ApiError;
 

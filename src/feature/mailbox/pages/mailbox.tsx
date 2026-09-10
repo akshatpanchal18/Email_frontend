@@ -5,28 +5,39 @@ import AddressInfo from "../components/address-info";
 import ErrorMessage from "../components/error-message";
 
 const Mailbox = () => {
-  const { address } = useParams<{ address: string }>();
+  const { id } = useParams<{ id: string }>();
   const {
     data: mailbox,
     isLoading,
     error,
-  } = useGetMailboxQuery(address ?? "", {
-    skip: !address,
+  } = useGetMailboxQuery(id ?? "", {
+    skip: !id,
   });
   if (error && "data" in error) {
     console.log(error.data);
 
     return <ErrorMessage message="Private Mailbox " />;
   }
-  if (!address) {
+  if (!id) {
     return <div>Mailbox address is missing</div>;
   }
 
   return (
-    <>
-      <AddressInfo address={mailbox?.address ?? address} loading={isLoading} />
-      <Inbox mailboxId={mailbox?.id ?? ""} />
-    </>
+    <div className="mx-auto grid w-full max-w-7xl grid-cols-1 gap-6 px-4 py-4 lg:grid-cols-[320px_minmax(0,1fr)]">
+      {/* Left */}
+      <aside className="lg:sticky lg:top-4 lg:self-start">
+        <AddressInfo
+          address={mailbox?.address ?? ""}
+          loading={isLoading}
+          isGuest={true}
+        />
+      </aside>
+
+      {/* Right */}
+      <main className="min-w-0">
+        <Inbox mailboxId={mailbox?.id ?? ""} />
+      </main>
+    </div>
   );
 };
 

@@ -20,6 +20,7 @@ const authApi = createApi({
     baseUrl: BASE_URL,
     credentials: "include",
   }),
+  tagTypes: ["INIT"],
 
   endpoints: (builder) => ({
     login: builder.mutation({
@@ -39,13 +40,15 @@ const authApi = createApi({
     }),
     initialize: builder.query<InitializeResponse["data"], void>({
       query: () => ({ url: "/auth/init", method: "GET" }),
+      providesTags: ["INIT"],
       transformResponse: (response: InitializeResponse) => response.data,
     }),
-    logout: builder.query<void, void>({
+    logout: builder.mutation<void, void>({
       query: () => ({
         url: "/auth/logout",
-        method: "GET",
+        method: "POST",
       }),
+      invalidatesTags: ["INIT"],
     }),
   }),
 });
@@ -55,7 +58,7 @@ export const {
   useRegisterMutation,
   useInitializeQuery,
   useLazyInitializeQuery,
-  useLazyLogoutQuery,
+  useLogoutMutation,
 } = authApi;
 
 export default authApi;

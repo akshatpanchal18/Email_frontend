@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   //   LuInbox,
   LuLayoutDashboard,
@@ -6,6 +7,9 @@ import {
   LuX,
 } from "react-icons/lu";
 import { NavLink } from "react-router-dom";
+import Modal from "../../components/ui/model";
+import Logout from "../../feature/auth/components/logout-dialog";
+import { useLogoutMutation } from "../../store/api/authApi";
 
 interface SidebarProps {
   open: boolean;
@@ -26,6 +30,20 @@ const navigation = [
 ];
 
 const Sidebar = ({ open, onClose }: SidebarProps) => {
+  const [isLogoutModelOpen, setIsLogoutModelOpen] = useState(false);
+  const [logoutMutation, { isLoading }] = useLogoutMutation();
+  const handleOpenLogoutModel = () => {
+    setIsLogoutModelOpen(true);
+  };
+  const handleLogout = async () => {
+    try {
+      await logoutMutation();
+    } catch (error) {
+      console.error("Logout failed:", error);
+    } finally {
+      setIsLogoutModelOpen(false);
+    }
+  };
   return (
     <>
       {/* Mobile Overlay */}
@@ -139,13 +157,23 @@ const Sidebar = ({ open, onClose }: SidebarProps) => {
               </div>
             </div> */}
 
-            <button className="mt-2 flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-danger hover:bg-danger-background">
+            <button
+              onClick={handleOpenLogoutModel}
+              className="mt-2 flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-danger hover:bg-danger-background"
+            >
               <LuLogOut size={18} />
               Logout
             </button>
           </div>
         </div>
       </aside>
+      <Modal
+        loading={isLoading}
+        open={isLogoutModelOpen}
+        onClose={() => setIsLogoutModelOpen(false)}
+      >
+        <Logout loading={isLoading} onConfirm={handleLogout} />
+      </Modal>
     </>
   );
 };

@@ -74,7 +74,7 @@ const Inbox = ({ mailboxId }: InboxProps) => {
   // }, [mailboxId, dispatch]);
   useEffect(() => {
     if (!mailboxId) return;
-
+    console.log("[socket] joining room for mailboxId:", mailboxId);
     // console.log(
     //   "joining room for mailboxId:",
     //   mailboxId,

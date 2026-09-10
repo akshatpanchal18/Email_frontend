@@ -14,7 +14,7 @@ const Mailbox = () => {
     skip: !id,
   });
   if (error && "data" in error) {
-    console.log(error.data);
+    // console.log(error.data);
 
     return <ErrorMessage message="Private Mailbox " />;
   }

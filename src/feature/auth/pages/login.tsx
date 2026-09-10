@@ -30,15 +30,15 @@ const Login = () => {
   const onSubmit = async (data: LoginFormValues) => {
     try {
       const response = await login(data).unwrap();
-      console.log("FULL RESPONSE:", response);
-      console.log("TOKEN:", response.data?.token);
+      // console.log("FULL RESPONSE:", response);
+      // console.log("TOKEN:", response.data?.token);
 
       if (!response.success) {
         return;
       }
 
       if (!response.data?.token) {
-        console.error("Login succeeded but no token was returned");
+        // console.error("Login succeeded but no token was returned");
         return;
       }
 
@@ -46,7 +46,7 @@ const Login = () => {
       dispatch(setAuthStatus(response.data.status));
       dispatch(setUser(response.data.user));
 
-      console.log("redirecting...");
+      // console.log("redirecting...");
 
       navigate("/d/inbox", { replace: true });
     } catch (error) {

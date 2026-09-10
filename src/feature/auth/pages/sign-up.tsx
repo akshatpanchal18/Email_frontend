@@ -36,9 +36,9 @@ const SignUp = () => {
         dispatch(setUser(response.data.user));
         navigate("/d/inbox");
       }
-      console.log("register successful:", response);
+      // console.log("register successful:", response);
     } catch (error) {
-      console.error("Login failed:", error);
+      console.error("register failed:", error);
     }
   };
 

@@ -53,7 +53,7 @@ const CreateMailbox: React.FC = () => {
       const response = await createAddress({
         address,
       }).unwrap();
-      console.log(response);
+      // console.log(response);
 
       if (status === "anonymous") {
         navigate(`/${response.id}`);

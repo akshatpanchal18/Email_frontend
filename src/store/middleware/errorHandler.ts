@@ -55,7 +55,7 @@ export const errorMiddleware: Middleware = () => (next) => (action) => {
 
     const errorResponse = rejectedAction.payload?.data;
 
-    console.log("ERROR_HANDLER =>", errorResponse);
+    // console.log("ERROR_HANDLER =>", errorResponse);
 
     const message =
       errorResponse?.message ||

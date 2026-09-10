@@ -33,7 +33,7 @@ const Inbox = ({ mailboxId }: InboxProps) => {
   useEffect(() => {
     socket.on("connect", () => console.log("SOCKET CONNECTED, id:", socket.id));
     socket.on("connect_error", (err) =>
-      console.log("SOCKET CONNECT ERROR:", err.message),
+      console.error("SOCKET CONNECT ERROR:", err.message),
     );
     socket.on("disconnect", (reason) =>
       console.log("SOCKET DISCONNECTED:", reason),
@@ -45,46 +45,13 @@ const Inbox = ({ mailboxId }: InboxProps) => {
       socket.off("disconnect");
     };
   }, []);
-  // useEffect(() => {
-  //   if (!mailboxId) return;
-
-  //   console.log(
-  //     "joining room for mailboxId:",
-  //     mailboxId,
-  //     "connected:",
-  //     socket.connected,
-  //   );
-  //   socket.emit("join_mailbox", mailboxId);
-
-  //   const handleNewMessage = (message: EmailMessage) => {
-  //     console.log("SOCKET EVENT RECEIVED:", message);
-  //     dispatch(
-  //       mailBoxApi.util.updateQueryData("getMyMessages", mailboxId, (draft) => {
-  //         draft.unshift(message);
-  //       }),
-  //     );
-  //   };
-
-  //   socket.on("new_message", handleNewMessage);
-
-  //   return () => {
-  //     socket.emit("leave_mailbox", mailboxId);
-  //     socket.off("new_message", handleNewMessage);
-  //   };
-  // }, [mailboxId, dispatch]);
   useEffect(() => {
     if (!mailboxId) return;
-    console.log("[socket] joining room for mailboxId:", mailboxId);
-    // console.log(
-    //   "joining room for mailboxId:",
-    //   mailboxId,
-    //   "connected:",
-    //   socket.connected,
-    // );
+    // console.log("[socket] joining room for mailboxId:", mailboxId);
     socket.emit("join_mailbox", mailboxId);
 
     const handleNewMessage = (message: EmailMessage) => {
-      console.log("SOCKET EVENT RECEIVED:", message);
+      // console.log("SOCKET EVENT RECEIVED:", message);
       dispatch(
         mailBoxApi.util.updateQueryData("getMyMessages", mailboxId, (draft) => {
           draft.unshift(message);

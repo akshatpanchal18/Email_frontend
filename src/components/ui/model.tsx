@@ -1,4 +1,4 @@
-import { useEffect, type ReactNode } from "react";
+import { useEffect, type ReactNode, type MouseEvent } from "react";
 import { TbX } from "react-icons/tb";
 
 interface ModalProps {
@@ -6,16 +6,18 @@ interface ModalProps {
   onClose: () => void;
   children: ReactNode;
   className?: string;
+  loading?: boolean;
 }
 
-const Modal = ({ open, onClose, children, className = "" }: ModalProps) => {
-  /*
-   * Close modal with Escape.
-   */
+const Modal = ({
+  open,
+  onClose,
+  children,
+  className = "",
+  loading = false,
+}: ModalProps) => {
   useEffect(() => {
-    if (!open) {
-      return;
-    }
+    if (!open) return;
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
@@ -30,16 +32,10 @@ const Modal = ({ open, onClose, children, className = "" }: ModalProps) => {
     };
   }, [open, onClose]);
 
-  /*
-   * Prevent the page behind the modal from scrolling.
-   */
   useEffect(() => {
-    if (!open) {
-      return;
-    }
+    if (!open) return;
 
     const originalOverflow = document.body.style.overflow;
-
     document.body.style.overflow = "hidden";
 
     return () => {
@@ -47,16 +43,9 @@ const Modal = ({ open, onClose, children, className = "" }: ModalProps) => {
     };
   }, [open]);
 
-  if (!open) {
-    return null;
-  }
+  if (!open) return null;
 
-  const handleBackdropClick = (event: React.MouseEvent<HTMLDivElement>) => {
-    /*
-     * Only close when the actual backdrop is clicked.
-     *
-     * Clicking inside the modal content won't close it.
-     */
+  const handleBackdropClick = (event: MouseEvent<HTMLDivElement>) => {
     if (event.target === event.currentTarget) {
       onClose();
     }
@@ -64,27 +53,48 @@ const Modal = ({ open, onClose, children, className = "" }: ModalProps) => {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6"
-      role="presentation"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4"
       onMouseDown={handleBackdropClick}
     >
       {/* Backdrop */}
       <div className="absolute inset-0 bg-slate-950/45 backdrop-blur-[2px]" />
 
-      {/* Modal */}
+      {/* Small modal */}
       <div
         role="dialog"
         aria-modal="true"
-        className={`relative z-10 flex max-h-[calc(100vh-2rem)] w-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl sm:max-h-[calc(100vh-3rem)] ${className}`}
+        className={`
+          relative z-10
+          w-[400px]
+          max-w-[calc(100vw-2rem)]
+          rounded-xl
+          border border-border
+          bg-background
+          text-foreground
+          shadow-2xl
+          ${className}
+        `}
       >
-        {/* Close button */}
         <button
           type="button"
+          disabled={loading}
           onClick={onClose}
           aria-label="Close modal"
-          className="absolute right-4 top-4 z-20 flex h-9 w-9 items-center justify-center rounded-full text-slate-400 transition hover:bg-slate-100 hover:text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+          className="
+          absolute right-3 top-3
+          flex size-8 items-center justify-center
+          rounded-md
+          text-muted-foreground
+          hover:bg-muted
+          hover:text-foreground
+
+          disabled:cursor-not-allowed
+          disabled:opacity-40
+          disabled:hover:bg-transparent
+          disabled:hover:text-muted-foreground
+        "
         >
-          <TbX className="h-5 w-5" />
+          <TbX className="size-5" />
         </button>
 
         {children}

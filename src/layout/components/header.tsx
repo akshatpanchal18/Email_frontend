@@ -1,4 +1,4 @@
-import { LuBell, LuChevronDown, LuMenu } from "react-icons/lu";
+import { LuBell, LuMenu } from "react-icons/lu";
 import { useAppSelector } from "../../hooks/redux";
 
 interface HeaderProps {
@@ -29,8 +29,8 @@ const Header = ({ onMenuClick }: HeaderProps) => {
           </button>
 
           <button className="flex items-center gap-2 rounded-lg p-1.5 hover:bg-surface-hover">
-            <div className="flex size-8 items-center justify-center rounded-full bg-stone-200 text-sm font-semibold text-stone-700">
-              T
+            <div className="flex size-8 items-center justify-center rounded-full bg-foreground text-sm font-semibold text-background">
+              {user?.email?.trim()?.charAt(0).toUpperCase() || "?"}
             </div>
 
             <div className="hidden text-left sm:block">
@@ -39,10 +39,10 @@ const Header = ({ onMenuClick }: HeaderProps) => {
               </p>
             </div>
 
-            <LuChevronDown
+            {/* <LuChevronDown
               size={16}
               className="hidden text-text-muted sm:block"
-            />
+            /> */}
           </button>
         </div>
       </div>

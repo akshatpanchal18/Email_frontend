@@ -48,19 +48,18 @@ const Sidebar = ({ open, onClose }: SidebarProps) => {
         <div className="flex h-full flex-col">
           {/* Logo */}
           <div className="flex h-16 items-center justify-between border-b border-border px-5">
-            <NavLink to="/dashboard" className="flex items-center gap-3">
-              <div className="flex items-center gap-3">
-                <div className="flex size-9 items-center justify-center overflow-hidden rounded-lg">
-                  <img
-                    src="/image.png"
-                    alt="Tempmail"
-                    className="size-full object-contain"
-                  />
-                </div>
+            <NavLink to="/d" className="flex items-center gap-3">
+              <div className="flex items-center gap-2">
+                <img
+                  src="/image.png"
+                  alt="MailFlex"
+                  className="size-14 shrink-0 rounded-xl object-contain"
+                />
 
-                <div>
-                  <h2 className="font-semibold text-text-primary">Tempmail</h2>
-                </div>
+                <span className="font-['Space_Grotesk'] text-[22px] font-bold tracking-[-0.035em]">
+                  <span className="text-gray-900">Mail</span>
+                  <span className="text-blue-600">Flex</span>
+                </span>
               </div>
             </NavLink>
 
@@ -83,6 +82,7 @@ const Sidebar = ({ open, onClose }: SidebarProps) => {
 
               return (
                 <NavLink
+                  key={item.path}
                   to={item.path}
                   end={item.path === "/d"}
                   className={({ isActive }) =>

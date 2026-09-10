@@ -1,4 +1,4 @@
-import type { EmailMessage } from "../../../store/api/mailboxApi";
+import type { EmailMessage } from "../../../store/types/mailbox";
 
 interface MessageDetailsProps {
   message: EmailMessage;

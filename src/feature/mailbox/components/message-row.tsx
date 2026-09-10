@@ -1,5 +1,5 @@
 import { LuMail, LuMailOpen } from "react-icons/lu";
-import type { EmailMessage } from "../../../store/api/mailboxApi";
+import type { EmailMessage } from "../../../store/types/mailbox";
 
 interface MessageRowProps {
   message: EmailMessage;

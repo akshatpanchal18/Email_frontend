@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import PublicLayout from "../layout/public-layout";
 import PrivateLayout from "../layout/private-layout";

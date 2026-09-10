@@ -67,7 +67,7 @@ const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery: baseQueryWithAuth,
   endpoints: () => ({}),
-  tagTypes: [],
+  tagTypes: ["MY_MAILBOXES"],
 });
 
 export default baseApi;

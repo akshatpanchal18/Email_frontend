@@ -48,6 +48,7 @@ export const mailBoxApi = baseApi.injectEndpoints({
       transformResponse: (response: MailBoxesResponse) => {
         return response.data.mailbox || [];
       },
+      providesTags: ["MY_MAILBOXES"],
     }),
 
     createMailAddress: builder.mutation({
@@ -59,6 +60,7 @@ export const mailBoxApi = baseApi.injectEndpoints({
       transformResponse(response: MailBoxResponse) {
         return response.data.mailbox || {};
       },
+      invalidatesTags: ["MY_MAILBOXES"],
     }),
     getMyMessages: builder.query<EmailMessage[], string>({
       query: (id: string) => ({

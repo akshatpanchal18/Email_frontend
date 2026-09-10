@@ -10,9 +10,6 @@ import PrivateInbox from "../feature/dashboard/pages/private-mailbox";
 
 const LoginPage = lazy(() => import("../feature/auth/pages/login"));
 const SignupPage = lazy(() => import("../feature/auth/pages/sign-up"));
-const DashboardPage = lazy(
-  () => import("../feature/dashboard/pages/dashboard"),
-);
 export const appRoutes = createBrowserRouter([
   {
     path: "/",
@@ -28,7 +25,7 @@ export const appRoutes = createBrowserRouter([
       },
 
       {
-        path: ":address",
+        path: ":id",
         element: <Mailbox />,
       },
       {

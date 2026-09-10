@@ -5,7 +5,6 @@ import AddressInfo from "../../mailbox/components/address-info";
 
 const PrivateInbox = () => {
   const { data: mailboxes = [], isLoading } = useGetMyMailboxesQuery();
-  console.log(mailboxes);
 
   if (isLoading) {
     return (
@@ -17,7 +16,7 @@ const PrivateInbox = () => {
   const mailbox = mailboxes[0];
   return (
     <div>
-      <div className="mx-auto w-full max-w-3xl p-2">
+      <div className="mx-auto w-full max-w-3xl">
         {mailboxes?.length === 0 ? (
           <CreateMailbox />
         ) : (

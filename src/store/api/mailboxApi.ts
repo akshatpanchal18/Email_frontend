@@ -1,4 +1,4 @@
-import type { EmailMessage, MailBox } from "../types/mailbox";
+import type { EmailMessage, MailBox, PaginationMeta } from "../types/mailbox";
 import baseApi from "./baseApi";
 
 export interface MailBoxResponse {
@@ -16,12 +16,25 @@ export interface MailBoxesResponse {
     mailbox: MailBox[];
   };
 }
+
 export interface EmailMessageResponse {
   success: boolean;
   message: string;
   data: {
     messages: EmailMessage[];
+    pagination: PaginationMeta;
   };
+}
+
+export interface GetMyMessagesParams {
+  mailboxId: string;
+  page: number;
+  limit: number;
+}
+
+export interface GetMyMessagesResult {
+  messages: EmailMessage[];
+  pagination: PaginationMeta;
 }
 
 export const mailBoxApi = baseApi.injectEndpoints({
@@ -48,51 +61,74 @@ export const mailBoxApi = baseApi.injectEndpoints({
       transformResponse: (response: MailBoxesResponse) => {
         return response.data.mailbox || [];
       },
+
       providesTags: ["MY_MAILBOXES"],
     }),
 
-    createMailAddress: builder.mutation({
+    // Create mailbox
+    createMailAddress: builder.mutation<MailBox, unknown>({
       query: (body) => ({
         url: "/mailbox/create",
         method: "POST",
         body,
       }),
-      transformResponse(response: MailBoxResponse) {
-        return response.data.mailbox || {};
+
+      transformResponse: (response: MailBoxResponse) => {
+        return response.data.mailbox;
       },
+
       invalidatesTags: ["MY_MAILBOXES"],
     }),
-    getMyMessages: builder.query<EmailMessage[], string>({
-      query: (id: string) => ({
-        url: `/mailbox/my-messages/${id}`,
+
+    // Get paginated messages
+    getMyMessages: builder.query<GetMyMessagesResult, GetMyMessagesParams>({
+      query: ({ mailboxId, page, limit = 20 }) => ({
+        url: `/mailbox/my-messages/${mailboxId}`,
         method: "GET",
+        params: {
+          page,
+          limit,
+        },
       }),
 
-      transformResponse: (response: EmailMessageResponse) => {
-        return response.data.messages || [];
+      transformResponse: (response: EmailMessageResponse): GetMyMessagesResult => {
+        return {
+          messages: response.data.messages || [],
+          pagination: response.data.pagination,
+        };
       },
     }),
+
+    // Mark message as read
     markMessageAsRead: builder.mutation<
       EmailMessage,
-      { mailboxId: string; messageId: string }
+      {
+        mailboxId: string;
+        messageId: string;
+        page: number;
+        limit: number;
+      }
     >({
       query: ({ mailboxId, messageId }) => ({
         url: `/mailbox/${mailboxId}/messages/${messageId}/read`,
         method: "PATCH",
       }),
 
-      async onQueryStarted(
-        { mailboxId, messageId },
-        { dispatch, queryFulfilled },
-      ) {
-        // optimistic update — flip is_read immediately, don't wait for the response
+      async onQueryStarted({ mailboxId, messageId, page, limit }, { dispatch, queryFulfilled }) {
         const patchResult = dispatch(
           mailBoxApi.util.updateQueryData(
             "getMyMessages",
-            mailboxId,
+            {
+              mailboxId,
+              page,
+              limit,
+            },
             (draft) => {
-              const msg = draft.find((m) => m.id === messageId);
-              if (msg) msg.is_read = true;
+              const message = draft.messages.find((message) => message.id === messageId);
+
+              if (message) {
+                message.is_read = true;
+              }
             },
           ),
         );
@@ -100,17 +136,11 @@ export const mailBoxApi = baseApi.injectEndpoints({
         try {
           await queryFulfilled;
         } catch {
-          patchResult.undo(); // roll back if the request actually fails
+          patchResult.undo();
         }
       },
     }),
   }),
 });
 
-export const {
-  useCreateMailAddressMutation,
-  useGetMailboxQuery,
-  useGetMyMailboxesQuery,
-  useGetMyMessagesQuery,
-  useMarkMessageAsReadMutation,
-} = mailBoxApi;
+export const { useCreateMailAddressMutation, useGetMailboxQuery, useGetMyMailboxesQuery, useGetMyMessagesQuery, useMarkMessageAsReadMutation } = mailBoxApi;

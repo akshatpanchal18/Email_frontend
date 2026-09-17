@@ -14,6 +14,7 @@ export interface EmailAttachment {
   filename: string;
   content_type: string;
   size: number;
+  url: string;
   storageKey: string;
 }
 export interface EmailMessage {
@@ -32,4 +33,12 @@ export interface EmailMessage {
   createdAt: string;
   expiresAt: string;
   attachments: EmailAttachment[] | [] | null;
+}
+export interface PaginationMeta {
+  page: number;
+  limit: number;
+  total: number;
+  totalPages: number;
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
 }

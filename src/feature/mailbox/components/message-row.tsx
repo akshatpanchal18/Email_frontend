@@ -21,7 +21,7 @@ const MessageRow = ({ message, onClick }: MessageRowProps) => {
   return (
     <button
       onClick={() => onClick?.(message)}
-      className={`flex w-full items-start gap-4 border-b px-5 py-4 text-left transition-colors hover:bg-gray-50 ${
+      className={`flex w-full items-start gap-4 border-b px-5 py-4 text-left transition-colors hover:bg-gray-50 cursor-pointer ${
         !message.is_read ? "bg-blue-50/40" : ""
       }`}
     >

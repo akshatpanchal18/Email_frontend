@@ -21,8 +21,10 @@ export interface EmailMessageResponse {
   success: boolean;
   message: string;
   data: {
-    messages: EmailMessage[];
-    pagination: PaginationMeta;
+    messages: {
+      messages: EmailMessage[];
+      pagination: PaginationMeta;
+    };
   };
 }
 
@@ -93,8 +95,8 @@ export const mailBoxApi = baseApi.injectEndpoints({
 
       transformResponse: (response: EmailMessageResponse): GetMyMessagesResult => {
         return {
-          messages: response.data.messages || [],
-          pagination: response.data.pagination,
+          messages: response.data.messages.messages ?? [],
+          pagination: response.data.messages.pagination,
         };
       },
     }),

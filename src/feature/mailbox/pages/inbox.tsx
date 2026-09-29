@@ -60,6 +60,11 @@ const Inbox = ({ mailboxId }: InboxProps) => {
    */
   const messages = Array.isArray(data?.messages) ? data.messages : [];
   const pagination = data?.pagination;
+  // useEffect(() => {
+  //   console.log("RAW_DATA", data);
+  //   console.log("MESSAGES", messages);
+  //   console.log("PAGE", pagination);
+  // }, [data]);
 
   const [markAsRead] = useMarkMessageAsReadMutation();
 
@@ -121,6 +126,9 @@ const Inbox = ({ mailboxId }: InboxProps) => {
             limit: ITEMS_PER_PAGE,
           },
           (draft) => {
+            if (!Array.isArray(draft.messages)) return;
+            if (draft.messages.some((m) => m.id === message.id)) return;
+
             draft.messages.unshift(message);
 
             /*

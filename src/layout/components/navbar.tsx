@@ -7,11 +7,7 @@ const Navbar = () => {
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4">
         {/* Logo */}
         <div className="flex items-center gap-2">
-          <img
-            src="/image.png"
-            alt="MailFlex"
-            className="size-14 shrink-0 rounded-xl object-contain"
-          />
+          <img src="/image.png" alt="MailFlex" className="size-14 shrink-0 rounded-xl object-contain" />
 
           <span className="font-['Space_Grotesk'] text-[22px] font-bold tracking-[-0.035em]">
             <span className="text-gray-900">Mail</span>
@@ -20,13 +16,14 @@ const Navbar = () => {
         </div>
 
         {/* Button */}
-        <Button
-          type="button"
-          onClick={() => navigate("/signup")}
-          className="rounded-lg bg-black px-4 py-2 text-sm font-medium text-white transition hover:bg-gray-800"
-        >
-          Get Started
-        </Button>
+        <div className="flex items-center gap-2">
+          <Button variant="outline" type="button" onClick={() => navigate("/login")} className="rounded-lg px-4 py-2 text-sm font-medium transition">
+            Login
+          </Button>
+          <Button type="button" onClick={() => navigate("/signup")} className="rounded-lg bg-black px-4 py-2 text-sm font-medium text-white transition hover:bg-gray-800">
+            Get Started
+          </Button>
+        </div>
       </div>
     </nav>
   );

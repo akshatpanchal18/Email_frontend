@@ -85,7 +85,7 @@ const CreateMailbox: React.FC = () => {
   };
 
   return (
-    <main className="flex h-full items-center justify-center px-4 py-12">
+    <main className="flex h-full items-center justify-center px-4 py-4">
       <div className="w-full max-w-md">
         <div className="mb-8 text-center">
           {isGuest && (
@@ -94,13 +94,9 @@ const CreateMailbox: React.FC = () => {
             </div>
           )}
 
-          <h1 className="text-2xl font-semibold tracking-tight text-slate-900">
-            Create a temporary email
-          </h1>
+          <h1 className="text-2xl font-semibold tracking-tight text-slate-900">Create a temporary email</h1>
 
-          <p className="mt-2 text-sm leading-6 text-slate-500">
-            Get a disposable inbox instantly.
-          </p>
+          <p className="mt-2 text-sm leading-6 text-slate-500">Get a disposable inbox instantly.</p>
         </div>
 
         <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
@@ -110,10 +106,7 @@ const CreateMailbox: React.FC = () => {
               control={control}
               render={({ field }) => (
                 <div>
-                  <label
-                    htmlFor="address"
-                    className="mb-2 block text-sm font-medium text-slate-700"
-                  >
+                  <label htmlFor="address" className="mb-2 block text-sm font-medium text-slate-700">
                     Email address
                   </label>
 
@@ -131,9 +124,7 @@ const CreateMailbox: React.FC = () => {
                       }}
                     />
 
-                    <div className="flex h-10.5 shrink-0 items-center rounded-r-input border border-l-0 border-border bg-surface-muted px-3 text-sm text-muted">
-                      {DOMAIN}
-                    </div>
+                    <div className="flex h-10.5 shrink-0 items-center rounded-r-input border border-l-0 border-border bg-surface-muted px-3 text-sm text-muted">{DOMAIN}</div>
                   </div>
                 </div>
               )}
@@ -145,9 +136,7 @@ const CreateMailbox: React.FC = () => {
               disabled={isSubmitting || isLoading}
               className="mt-4 w-full rounded-xl bg-slate-900 px-4 py-3 text-sm font-medium text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-50"
             >
-              {isSubmitting || isLoading
-                ? "Creating mailbox..."
-                : "Create email address"}
+              {isSubmitting || isLoading ? "Creating mailbox..." : "Create email address"}
             </Button>
           </form>
 
@@ -157,19 +146,11 @@ const CreateMailbox: React.FC = () => {
                 <FaCircleInfo fontSize={30} className="text-blue-500" />
 
                 <div>
-                  <p className="text-sm font-medium text-blue-900">
-                    Want to keep your mailbox?
-                  </p>
+                  <p className="text-sm font-medium text-blue-900">Want to keep your mailbox?</p>
 
-                  <p className="mt-1 text-xs leading-5 text-blue-700">
-                    Create an account to keep your mailbox and access your
-                    emails later, even after the temporary session expires.
-                  </p>
+                  <p className="mt-1 text-xs leading-5 text-blue-700">Create an account to keep your mailbox and access your emails later, even after the temporary session expires.</p>
 
-                  <NavLink
-                    to="/signup"
-                    className="mt-2 inline-block text-xs font-semibold text-blue-700 underline underline-offset-2 hover:text-blue-900"
-                  >
+                  <NavLink to="/signup" className="mt-2 inline-block text-xs font-semibold text-blue-700 underline underline-offset-2 hover:text-blue-900">
                     Create an account
                   </NavLink>
                 </div>

@@ -27,14 +27,7 @@ const Mailbox = () => {
     <div className="mx-auto grid w-full max-w-7xl grid-cols-1 gap-6 px-4 py-2 lg:grid-cols-[320px_minmax(0,1fr)]">
       {/* Left */}
       <aside className="lg:sticky lg:top-4 lg:self-start">
-        <div className="flex flex-col gap-4">
-          <AddressInfo address={mailbox?.address ?? ""} loading={isLoading} />
-
-          {/* Advertisement under mailbox */}
-          <div className="mx-auto w-full max-w-xl">
-            <HorizontalSection />
-          </div>
-        </div>
+        <AddressInfo address={mailbox?.address ?? ""} loading={isLoading} />
       </aside>
 
       {/* Right */}

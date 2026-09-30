@@ -1,24 +1,27 @@
 /* eslint-disable react-refresh/only-export-components */
 import { createBrowserRouter, Navigate } from "react-router-dom";
-import PublicLayout from "../layout/public-layout";
-import PrivateLayout from "../layout/private-layout";
-import { lazy } from "react";
+import { lazy, Suspense } from "react";
 import ProtectedRoute from "./protected-route";
 import PublicRoute from "./public-route";
 import Home from "../feature/home/pages/home";
 import Mailbox from "../feature/mailbox/pages/mailbox";
 import PrivateInbox from "../feature/dashboard/pages/private-mailbox";
-import PrivacyPolicy from "../feature/legal-pages/pages/privacy-policy";
-import TermsOfUse from "../feature/legal-pages/pages/terms-of-use";
+import RootLayout from "../layout/root-layout";
 
 const LoginPage = lazy(() => import("../feature/auth/pages/login"));
 const SignupPage = lazy(() => import("../feature/auth/pages/sign-up"));
+const TermsOfUsePage = lazy(() => import("../feature/legal-pages/pages/terms-of-use"));
+const PrivacyPolicyPage = lazy(() => import("../feature/legal-pages/pages/privacy-policy"));
+const ProfilePage = lazy(() => import("../feature/dashboard/pages/profile"));
+const PageLoader = () => <div className="flex min-h-screen items-center justify-center">Loading...</div>;
+
+const SuspenseWrapper = ({ children }: { children: React.ReactNode }) => <Suspense fallback={<PageLoader />}>{children}</Suspense>;
 export const appRoutes = createBrowserRouter([
   {
     path: "/",
     element: (
       <PublicRoute>
-        <PublicLayout />
+        <RootLayout isPublic={true} />
       </PublicRoute>
     ),
     children: [
@@ -45,7 +48,7 @@ export const appRoutes = createBrowserRouter([
     path: "/d",
     element: (
       <ProtectedRoute>
-        <PrivateLayout />
+        <RootLayout isPublic={false} />
       </ProtectedRoute>
     ),
     children: [
@@ -57,6 +60,15 @@ export const appRoutes = createBrowserRouter([
         path: "inbox",
         element: <PrivateInbox />,
       },
+      {
+        path: "profile",
+        element: (
+          <SuspenseWrapper>
+            {" "}
+            <ProfilePage />
+          </SuspenseWrapper>
+        ),
+      },
     ],
   },
   {
@@ -65,10 +77,18 @@ export const appRoutes = createBrowserRouter([
   },
   {
     path: "/privacy-policy",
-    element: <PrivacyPolicy />,
+    element: (
+      <SuspenseWrapper>
+        <PrivacyPolicyPage />
+      </SuspenseWrapper>
+    ),
   },
   {
     path: "terms-of-use",
-    element: <TermsOfUse />,
+    element: (
+      <SuspenseWrapper>
+        <TermsOfUsePage />
+      </SuspenseWrapper>
+    ),
   },
 ]);

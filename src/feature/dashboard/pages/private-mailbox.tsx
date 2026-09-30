@@ -6,9 +6,11 @@ import Modal from "../../../components/ui/model";
 import Logout from "../../auth/components/logout-dialog";
 import { useLogoutMutation } from "../../../store/api/authApi";
 import { useState } from "react";
-import HorizontalSection from "../../../ads/content/horizontal-section";
+import { useNavigate } from "react-router-dom";
+import { LeftRail } from "../../../layout/root-layout";
 
 const PrivateInbox = () => {
+  const navigate = useNavigate();
   const [isLogoutModelOpen, setIsLogoutModelOpen] = useState(false);
   const { data: mailboxes = [], isLoading } = useGetMyMailboxesQuery();
   const [logoutMutation, { isLoading: logoutLoading }] = useLogoutMutation();
@@ -50,32 +52,14 @@ const PrivateInbox = () => {
 
   return (
     <>
-      <div className="mx-auto w-full max-w-7xl">
-        <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-[280px_minmax(0,1fr)]">
-          {/* Account / Mailbox card */}
-          <aside className="lg:sticky lg:top-4 flex flex-col gap-4">
-            <MailboxCard
-              address={mailbox.address}
-              loading={false}
-              onManageProfile={() => {
-                // navigate("/profile");
-              }}
-              onLogout={() => {
-                handleOpenLogoutModel();
-              }}
-            />
-            {/* Advertisement under mailbox */}
-            <div className="mx-auto w-full max-w-xl">
-              <HorizontalSection />
-            </div>
-          </aside>
+      <LeftRail>
+        <MailboxCard address={mailbox.address} loading={false} onManageProfile={() => navigate("/d/profile")} onLogout={handleOpenLogoutModel} />
+      </LeftRail>
 
-          {/* Inbox */}
-          <section className="min-w-0">
-            <Inbox mailboxId={mailbox.id} />
-          </section>
-        </div>
+      <div className="h-full min-w-0">
+        <Inbox mailboxId={mailbox.id} />
       </div>
+
       <Modal size="content" loading={logoutLoading} open={isLogoutModelOpen} onClose={() => setIsLogoutModelOpen(false)}>
         <Logout loading={logoutLoading} onConfirm={handleLogout} />
       </Modal>

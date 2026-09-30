@@ -1,4 +1,4 @@
-import { LuHardDrive, LuMail, LuUser, LuCircleAlert, LuArrowBigLeft, LuArrowLeft, LuDot } from "react-icons/lu";
+import { LuHardDrive, LuMail, LuUser, LuCircleAlert, LuArrowLeft, LuDot } from "react-icons/lu";
 import { useGetProfileQuery } from "../../../store/api/userApi";
 import { NavLink, useLocation } from "react-router-dom";
 import { Button } from "../../../components/ui/button";

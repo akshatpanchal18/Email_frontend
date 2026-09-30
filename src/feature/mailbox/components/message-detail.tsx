@@ -1,5 +1,5 @@
 import { LuPaperclip, LuFile, LuDownload } from "react-icons/lu";
-import type { EmailAttachment, EmailMessage } from "../../../store/types/mailbox";
+import type { EmailMessage } from "../../../store/types/mailbox";
 
 interface MessageDetailsProps {
   message: EmailMessage;

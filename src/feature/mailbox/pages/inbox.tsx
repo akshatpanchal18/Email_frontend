@@ -30,13 +30,6 @@ const Inbox = ({ mailboxId }: InboxProps) => {
   const [selectedMessage, setSelectedMessage] = useState<EmailMessage | null>(null);
 
   /*
-   * Reset pagination when switching mailboxes.
-   */
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [mailboxId]);
-
-  /*
    * Fetch paginated messages.
    */
   const { data, isLoading, isFetching, refetch } = useGetMyMessagesQuery(

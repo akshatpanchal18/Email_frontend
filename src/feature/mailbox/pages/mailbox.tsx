@@ -3,7 +3,6 @@ import Inbox from "./inbox";
 import { useGetMailboxQuery } from "../../../store/api/mailboxApi";
 import AddressInfo from "../components/address-info";
 import ErrorMessage from "../components/error-message";
-import HorizontalSection from "../../../ads/content/horizontal-section";
 
 const Mailbox = () => {
   const { id } = useParams<{ id: string }>();

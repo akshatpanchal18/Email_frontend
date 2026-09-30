@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 import Navbar from "./components/navbar";
 import Footer from "./components/footer";
-import DummyAds from "../ads/dummy-ads";
+import VerticalSection from "../ads/content/vertical-section";
 
 const PublicLayout = () => {
   return (
@@ -16,9 +16,9 @@ const PublicLayout = () => {
           </section>
 
           {/* Advertisement */}
-          <aside className="hidden lg:block">
+          <aside className="lg:block">
             <div className="sticky top-24">
-              <DummyAds height="500px" />
+              <VerticalSection />
             </div>
           </aside>
         </div>

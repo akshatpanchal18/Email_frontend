@@ -6,7 +6,7 @@ import Modal from "../../../components/ui/model";
 import Logout from "../../auth/components/logout-dialog";
 import { useLogoutMutation } from "../../../store/api/authApi";
 import { useState } from "react";
-import DummyAds from "../../../ads/dummy-ads";
+import HorizontalSection from "../../../ads/content/horizontal-section";
 
 const PrivateInbox = () => {
   const [isLogoutModelOpen, setIsLogoutModelOpen] = useState(false);
@@ -66,7 +66,7 @@ const PrivateInbox = () => {
             />
             {/* Advertisement under mailbox */}
             <div className="mx-auto w-full max-w-xl">
-              <DummyAds />
+              <HorizontalSection />
             </div>
           </aside>
 

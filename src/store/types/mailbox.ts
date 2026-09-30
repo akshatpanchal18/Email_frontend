@@ -42,3 +42,15 @@ export interface PaginationMeta {
   hasNextPage: boolean;
   hasPreviousPage: boolean;
 }
+export interface Attachment {
+  id: string;
+  filename: string;
+  content_type: string;
+  size: number;
+  url: string;
+  email: {
+    id: string;
+    subject: string;
+    mailbox_id: string;
+  };
+}

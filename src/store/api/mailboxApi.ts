@@ -1,4 +1,4 @@
-import type { EmailMessage, MailBox, PaginationMeta } from "../types/mailbox";
+import type { Attachment, EmailMessage, MailBox, PaginationMeta } from "../types/mailbox";
 import baseApi from "./baseApi";
 
 export interface MailBoxResponse {
@@ -38,7 +38,13 @@ export interface GetMyMessagesResult {
   messages: EmailMessage[];
   pagination: PaginationMeta;
 }
-
+export interface AttachmentsResponse {
+  items: Attachment[];
+  total: number;
+  totalBytes: number;
+  page: number;
+  limit: number;
+}
 export const mailBoxApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     // Returns ONE mailbox
@@ -142,7 +148,26 @@ export const mailBoxApi = baseApi.injectEndpoints({
         }
       },
     }),
+    getAllAttachments: builder.query<
+      AttachmentsResponse,
+      {
+        mailboxId: string;
+        page: number;
+        limit: number;
+      }
+    >({
+      query: ({ mailboxId, page, limit }) => ({
+        url: `/mailbox/${mailboxId}/attachments`,
+        method: "GET",
+        params: {
+          page,
+          limit,
+        },
+      }),
+
+      transformResponse: (response: { success: boolean; message: string; data: AttachmentsResponse }) => response.data,
+    }),
   }),
 });
 
-export const { useCreateMailAddressMutation, useGetMailboxQuery, useGetMyMailboxesQuery, useGetMyMessagesQuery, useMarkMessageAsReadMutation } = mailBoxApi;
+export const { useCreateMailAddressMutation, useGetMailboxQuery, useGetMyMailboxesQuery, useGetMyMessagesQuery, useMarkMessageAsReadMutation, useGetAllAttachmentsQuery } = mailBoxApi;

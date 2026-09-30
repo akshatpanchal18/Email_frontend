@@ -53,7 +53,18 @@ const PrivateInbox = () => {
   return (
     <>
       <LeftRail>
-        <MailboxCard address={mailbox.address} loading={false} onManageProfile={() => navigate("/d/profile")} onLogout={handleOpenLogoutModel} />
+        <MailboxCard
+          address={mailbox.address}
+          loading={false}
+          onManageProfile={() =>
+            navigate("/d/profile", {
+              state: {
+                mailboxId: mailbox?.id,
+              },
+            })
+          }
+          onLogout={handleOpenLogoutModel}
+        />
       </LeftRail>
 
       <div className="h-full min-w-0">

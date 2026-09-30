@@ -5,6 +5,10 @@ interface MessageDetailsProps {
   message: EmailMessage;
 }
 const formatSize = (bytes: number) => (bytes >= 1024 * 1024 ? `${(bytes / (1024 * 1024)).toFixed(1)} MB` : `${(bytes / 1024).toFixed(1)} KB`);
+export function getDownloadUrl(url: string, filename?: string) {
+  const flag = filename ? `fl_attachment:${encodeURIComponent(filename.replace(/\.[^.]+$/, ""))}` : "fl_attachment";
+  return url.replace("/upload/", `/upload/${flag}/`);
+}
 const MessageDetails = ({ message }: MessageDetailsProps) => {
   const date = new Date(message.receivedAt).toLocaleString([], {
     dateStyle: "medium",
@@ -67,14 +71,7 @@ const MessageDetails = ({ message }: MessageDetailsProps) => {
                     </div>
                   </div>
 
-                  <a
-                    href={attachment.url}
-                    download={attachment.filename}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`Download ${attachment.filename}`}
-                    className="ml-3 flex h-8 w-8 shrink-0 items-center justify-center rounded-md text-slate-400 transition hover:bg-slate-100 hover:text-slate-700"
-                  >
+                  <a href={getDownloadUrl(attachment.url, attachment.filename)} aria-label={`Download ${attachment.filename}`} className="...">
                     <LuDownload className="h-4 w-4" />
                   </a>
                 </div>

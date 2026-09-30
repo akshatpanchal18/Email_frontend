@@ -141,12 +141,9 @@
 
   --shadow-input: 0 1px 2px rgb(0 0 0 / 0.05);
 
-  --shadow-input-focus:
-    0 0 0 3px rgb(120 113 108 / 0.15);
+  --shadow-input-focus: 0 0 0 3px rgb(120 113 108 / 0.15);
 
-  --shadow-card:
-    0 1px 3px rgb(0 0 0 / 0.08),
-    0 1px 2px rgb(0 0 0 / 0.04);
+  --shadow-card: 0 1px 3px rgb(0 0 0 / 0.08), 0 1px 2px rgb(0 0 0 / 0.04);
 
   /* ========================================
      Typography
@@ -185,4 +182,7 @@
   &::-webkit-scrollbar-thumb:hover {
     background-color: var(--color-stone-400);
   }
+}
+button {
+  cursor: pointer;
 }

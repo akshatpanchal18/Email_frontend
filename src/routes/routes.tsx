@@ -8,6 +8,8 @@ import PublicRoute from "./public-route";
 import Home from "../feature/home/pages/home";
 import Mailbox from "../feature/mailbox/pages/mailbox";
 import PrivateInbox from "../feature/dashboard/pages/private-mailbox";
+import PrivacyPolicy from "../feature/legal-pages/pages/privacy-policy";
+import TermsOfUse from "../feature/legal-pages/pages/terms-of-use";
 
 const LoginPage = lazy(() => import("../feature/auth/pages/login"));
 const SignupPage = lazy(() => import("../feature/auth/pages/sign-up"));
@@ -60,5 +62,13 @@ export const appRoutes = createBrowserRouter([
   {
     path: "*",
     element: <Navigate to="/" replace />,
+  },
+  {
+    path: "/privacy-policy",
+    element: <PrivacyPolicy />,
+  },
+  {
+    path: "terms-of-use",
+    element: <TermsOfUse />,
   },
 ]);

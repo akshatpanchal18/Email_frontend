@@ -3,6 +3,7 @@ import Inbox from "./inbox";
 import { useGetMailboxQuery } from "../../../store/api/mailboxApi";
 import AddressInfo from "../components/address-info";
 import ErrorMessage from "../components/error-message";
+import DummyAds from "../../../ads/dummy-ads";
 
 const Mailbox = () => {
   const { id } = useParams<{ id: string }>();
@@ -26,7 +27,14 @@ const Mailbox = () => {
     <div className="mx-auto grid w-full max-w-7xl grid-cols-1 gap-6 px-4 py-2 lg:grid-cols-[320px_minmax(0,1fr)]">
       {/* Left */}
       <aside className="lg:sticky lg:top-4 lg:self-start">
-        <AddressInfo address={mailbox?.address ?? ""} loading={isLoading} isGuest={true} />
+        <div className="flex flex-col gap-4">
+          <AddressInfo address={mailbox?.address ?? ""} loading={isLoading} />
+
+          {/* Advertisement under mailbox */}
+          <div className="mx-auto w-full max-w-xl">
+            <DummyAds />
+          </div>
+        </div>
       </aside>
 
       {/* Right */}

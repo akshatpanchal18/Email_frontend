@@ -213,7 +213,7 @@ const Inbox = ({ mailboxId }: InboxProps) => {
 
   return (
     <>
-      <div className="mx-auto my-4 flex h-125 w-full max-w-3xl flex-col overflow-hidden rounded-xl border bg-white shadow-sm">
+      <div className="mx-auto flex h-125 w-full max-w-3xl flex-col overflow-hidden rounded-xl border bg-white shadow-sm">
         {/* Header */}
         <div className="flex items-center justify-between border-b px-5 py-4">
           <div className="flex items-center gap-2">
@@ -250,7 +250,7 @@ const Inbox = ({ mailboxId }: InboxProps) => {
       {pagination && pagination.total > 0 && <Pagination currentPage={pagination.page} totalItems={pagination.total} itemsPerPage={pagination.limit} onPageChange={handlePageChange} />}
 
       {/* Message Details */}
-      <Modal open={selectedMessage !== null} onClose={handleCloseMessage} className="h-[calc(100vh-2rem)] max-w-3xl sm:h-[calc(100vh-4rem)]">
+      <Modal size="large" open={selectedMessage !== null} onClose={handleCloseMessage} className="h-[calc(100vh-2rem)] max-w-3xl sm:h-[calc(100vh-4rem)]">
         {selectedMessage && <MessageDetails message={selectedMessage} />}
       </Modal>
     </>

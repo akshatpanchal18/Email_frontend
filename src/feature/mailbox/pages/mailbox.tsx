@@ -3,37 +3,25 @@ import Inbox from "./inbox";
 import { useGetMailboxQuery } from "../../../store/api/mailboxApi";
 import AddressInfo from "../components/address-info";
 import ErrorMessage from "../components/error-message";
+import { LeftRail } from "../../../layout/root-layout";
 
 const Mailbox = () => {
   const { id } = useParams<{ id: string }>();
-  const {
-    data: mailbox,
-    isLoading,
-    error,
-  } = useGetMailboxQuery(id ?? "", {
-    skip: !id,
-  });
-  if (error && "data" in error) {
-    // console.log(error.data);
+  const { data: mailbox, isLoading, error } = useGetMailboxQuery(id ?? "", { skip: !id });
 
-    return <ErrorMessage message="Private Mailbox " />;
-  }
-  if (!id) {
-    return <div>Mailbox address is missing</div>;
-  }
+  if (error && "data" in error) return <ErrorMessage message="Private Mailbox " />;
+  if (!id) return <div>Mailbox address is missing</div>;
 
   return (
-    <div className="mx-auto grid w-full max-w-7xl grid-cols-1 gap-6 px-4 py-2 lg:grid-cols-[320px_minmax(0,1fr)]">
-      {/* Left */}
-      <aside className="lg:sticky lg:top-4 lg:self-start">
+    <>
+      <LeftRail>
         <AddressInfo address={mailbox?.address ?? ""} loading={isLoading} />
-      </aside>
+      </LeftRail>
 
-      {/* Right */}
-      <main className="min-w-0">
+      <div className="h-full min-w-0">
         <Inbox mailboxId={mailbox?.id ?? ""} />
-      </main>
-    </div>
+      </div>
+    </>
   );
 };
 

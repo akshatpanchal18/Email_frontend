@@ -4,7 +4,7 @@ import { NavLink, useLocation } from "react-router-dom";
 import { Button } from "../../../components/ui/button";
 import { useState } from "react";
 import Modal from "../../../components/ui/model";
-import ViewAllMedia from "../components/media-expolerer";
+import ViewAllMedia from "../components/media-explorer";
 
 const formatStorage = (bytes: number) => {
   const mb = bytes / (1024 * 1024);

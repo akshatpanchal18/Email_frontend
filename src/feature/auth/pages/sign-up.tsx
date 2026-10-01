@@ -43,46 +43,24 @@ const SignUp = () => {
   };
 
   return (
-    <div className="flex items-center justify-center px-4 py-20">
+    <div className="flex items-center justify-center px-4 py-8">
       <div className="w-full max-w-md rounded-2xl border border-border bg-surface p-8 shadow-sm">
         <div className="mb-8">
-          <h1 className="text-2xl font-semibold text-foreground">
-            Create your account
-          </h1>
+          <h1 className="text-2xl font-semibold text-foreground">Create your account</h1>
 
-          <p className="mt-2 text-sm text-muted">
-            Sign up to get started and create your account.
-          </p>
+          <p className="mt-2 text-sm text-muted">Sign up to get started and create your account.</p>
         </div>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
           <Controller
             name="email"
             control={control}
-            render={({ field }) => (
-              <Input
-                {...field}
-                label="Email"
-                type="email"
-                placeholder="you@example.com"
-                autoComplete="email"
-                error={errors.email?.message}
-              />
-            )}
+            render={({ field }) => <Input {...field} label="Email" type="email" placeholder="you@example.com" autoComplete="email" error={errors.email?.message} />}
           />
 
           <Controller
             name="password"
             control={control}
-            render={({ field }) => (
-              <Input
-                {...field}
-                label="Password"
-                type="password"
-                placeholder="Enter your password"
-                autoComplete="current-password"
-                error={errors.password?.message}
-              />
-            )}
+            render={({ field }) => <Input {...field} label="Password" type="password" placeholder="Enter your password" autoComplete="current-password" error={errors.password?.message} />}
           />
 
           <Button
@@ -97,10 +75,7 @@ const SignUp = () => {
         <div>
           <p className="mt-6 text-center text-sm text-muted">
             Already have an account ?{" "}
-            <NavLink
-              to={"/login"}
-              className={"hover:underline hover:text-blue-600"}
-            >
+            <NavLink to={"/login"} className={"hover:underline hover:text-blue-600"}>
               Login
             </NavLink>
           </p>

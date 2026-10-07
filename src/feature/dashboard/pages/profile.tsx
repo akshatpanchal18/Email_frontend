@@ -5,6 +5,7 @@ import { Button } from "../../../components/ui/button";
 import { useState } from "react";
 import Modal from "../../../components/ui/model";
 import ViewAllMedia from "../components/media-explorer";
+import { useEmptyInboxMutation } from "../../../store/api/mailboxApi";
 
 const formatStorage = (bytes: number) => {
   const mb = bytes / (1024 * 1024);
@@ -96,6 +97,7 @@ const Profile = () => {
   const location = useLocation();
 
   const mailboxId = location.state?.mailboxId;
+  const [emptyInbox, { isLoading: emptyInboxLoading }] = useEmptyInboxMutation();
   const { data, isLoading, isError } = useGetProfileQuery();
 
   if (isLoading) {
@@ -123,7 +125,9 @@ const Profile = () => {
   const storagePercentage = Math.min(storage.percent, 100);
 
   const remainingBytes = Math.max(storage.maxBytes - storage.usedBytes, 0);
-
+  const handleEmptyInbox = async () => {
+    await emptyInbox().unwrap();
+  };
   return (
     <>
       <div className="mx-auto w-full max-w-2xl px-2 py-6">
@@ -172,24 +176,30 @@ const Profile = () => {
                   <LuMail size={17} />
                 </div>
 
-                <div className="min-w-0 flex-1">
-                  <div className="flex items-center gap-2">
-                    <p className="text-xs font-medium uppercase tracking-wide text-text-muted">Mailbox address</p>
+                <div className="flex min-w-0 flex-1 flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                  <div className="min-w-0">
+                    <div className="flex items-center gap-2">
+                      <p className="text-xs font-medium uppercase tracking-wide text-text-muted">Mailbox address</p>
+                      <span className="size-1.5 rounded-full bg-green-500" />
+                    </div>
 
-                    <span className="size-1.5 rounded-full bg-green-500" />
+                    <div className="mt-1 space-y-1">
+                      {mailbox.addresses.map((mailboxAddress) => (
+                        <p key={mailboxAddress.id} className="truncate text-sm font-semibold text-text-primary">
+                          {mailboxAddress.address}
+                        </p>
+                      ))}
+                    </div>
+
+                    <p className="mt-1 text-xs text-text-muted">
+                      {mailbox.mailboxCount} {mailbox.mailboxCount === 1 ? "mailbox" : "mailboxes"} · {mailbox.emailCount} {mailbox.emailCount === 1 ? "email" : "emails"}
+                    </p>
                   </div>
 
-                  <div className="mt-1 space-y-1">
-                    {mailbox.addresses.map((mailboxAddress) => (
-                      <p key={mailboxAddress.id} className="truncate text-sm font-semibold text-text-primary">
-                        {mailboxAddress.address}
-                      </p>
-                    ))}
-                  </div>
-
-                  <p className="mt-1 text-xs text-text-muted">
-                    {mailbox.mailboxCount} {mailbox.mailboxCount === 1 ? "mailbox" : "mailboxes"} · {mailbox.emailCount} {mailbox.emailCount === 1 ? "email" : "emails"}
-                  </p>
+                  {/* Empty Inbox */}
+                  <Button loading={emptyInboxLoading} onClick={handleEmptyInbox} size="sm" variant="danger" type="button" className="w-full shrink-0 sm:w-auto">
+                    Empty inbox
+                  </Button>
                 </div>
               </div>
             </div>

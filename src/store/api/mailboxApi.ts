@@ -98,7 +98,7 @@ export const mailBoxApi = baseApi.injectEndpoints({
           limit,
         },
       }),
-
+      providesTags: ["MY_MESSAGES"],
       transformResponse: (response: EmailMessageResponse): GetMyMessagesResult => {
         return {
           messages: response.data.messages.messages ?? [],
@@ -167,7 +167,39 @@ export const mailBoxApi = baseApi.injectEndpoints({
 
       transformResponse: (response: { success: boolean; message: string; data: AttachmentsResponse }) => response.data,
     }),
+    deleteEmailMessage: builder.mutation({
+      query: ({ messageId }) => ({
+        url: `/mailbox/${messageId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["MY_MESSAGES"],
+    }),
+    bulkDeleteEmailMessages: builder.mutation({
+      query: (body) => ({
+        url: `/mailbox/messages`,
+        method: "DELETE",
+        body,
+      }),
+      invalidatesTags: ["MY_MESSAGES"],
+    }),
+    emptyInbox: builder.mutation<void, void>({
+      query: () => ({
+        url: `/mailbox/empty`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["MY_MESSAGES"],
+    }),
   }),
 });
 
-export const { useCreateMailAddressMutation, useGetMailboxQuery, useGetMyMailboxesQuery, useGetMyMessagesQuery, useMarkMessageAsReadMutation, useGetAllAttachmentsQuery } = mailBoxApi;
+export const {
+  useCreateMailAddressMutation,
+  useGetMailboxQuery,
+  useGetMyMailboxesQuery,
+  useGetMyMessagesQuery,
+  useMarkMessageAsReadMutation,
+  useGetAllAttachmentsQuery,
+  useDeleteEmailMessageMutation,
+  useBulkDeleteEmailMessagesMutation,
+  useEmptyInboxMutation,
+} = mailBoxApi;

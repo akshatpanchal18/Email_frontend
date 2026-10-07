@@ -2,7 +2,7 @@ import { isFulfilled } from "@reduxjs/toolkit";
 import type { Middleware } from "@reduxjs/toolkit";
 import { toast } from "sonner";
 
-const includedEndpoints = [""];
+const includedEndpoints = ["emptyInbox"];
 
 type RTKQueryAction = {
   meta: {

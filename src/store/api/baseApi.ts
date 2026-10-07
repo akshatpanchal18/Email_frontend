@@ -1,10 +1,4 @@
-import {
-  createApi,
-  fetchBaseQuery,
-  type BaseQueryFn,
-  type FetchArgs,
-  type FetchBaseQueryError,
-} from "@reduxjs/toolkit/query/react";
+import { createApi, fetchBaseQuery, type BaseQueryFn, type FetchArgs, type FetchBaseQueryError } from "@reduxjs/toolkit/query/react";
 
 import { BASE_URL } from "../../config/setting";
 import { clearAuth } from "../reducer/auth";
@@ -31,11 +25,7 @@ const sessionBaseQuery = fetchBaseQuery({
   credentials: "include",
 });
 
-const baseQueryWithAuth: BaseQueryFn<
-  string | FetchArgs,
-  unknown,
-  FetchBaseQueryError
-> = async (args, api, extraOptions) => {
+const baseQueryWithAuth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError> = async (args, api, extraOptions) => {
   // 1. Normal protected request
   let result = await protectedBaseQuery(args, api, extraOptions);
   // 2. Token expired / unauthorized
@@ -67,7 +57,7 @@ const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery: baseQueryWithAuth,
   endpoints: () => ({}),
-  tagTypes: ["MY_MAILBOXES"],
+  tagTypes: ["MY_MAILBOXES", "MY_MESSAGES"],
 });
 
 export default baseApi;

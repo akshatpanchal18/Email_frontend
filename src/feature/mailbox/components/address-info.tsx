@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { LuCheck, LuCopy, LuInbox, LuMail, LuSettings, LuSparkles, LuStar } from "react-icons/lu";
+import { LuCheck, LuCopy, LuMail, LuSparkles } from "react-icons/lu";
 
 interface AddressInfoProps {
   address: string;

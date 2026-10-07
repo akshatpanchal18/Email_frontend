@@ -55,59 +55,29 @@ const Login = () => {
   };
 
   return (
-    <div className="flex h-full items-center justify-center px-4 py-20">
+    <div className="flex h-full items-center justify-center px-4 py-8">
       <div className="w-full max-w-md rounded-2xl border border-border bg-surface p-8 shadow-sm">
         <div className="mb-8">
-          <h1 className="text-2xl font-semibold text-foreground">
-            Welcome back
-          </h1>
+          <h1 className="text-2xl font-semibold text-foreground">Welcome back</h1>
 
-          <p className="mt-2 text-sm text-muted">
-            Sign in to your account to continue.
-          </p>
+          <p className="mt-2 text-sm text-muted">Sign in to your account to continue.</p>
         </div>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
           <Controller
             name="email"
             control={control}
-            render={({ field }) => (
-              <Input
-                {...field}
-                label="Email"
-                type="email"
-                placeholder="you@example.com"
-                autoComplete="email"
-                error={errors.email?.message}
-              />
-            )}
+            render={({ field }) => <Input {...field} label="Email" type="email" placeholder="you@example.com" autoComplete="email" error={errors.email?.message} />}
           />
 
           <Controller
             name="password"
             control={control}
-            render={({ field }) => (
-              <Input
-                {...field}
-                label="Password"
-                type="password"
-                placeholder="Enter your password"
-                autoComplete="current-password"
-                error={errors.password?.message}
-              />
-            )}
+            render={({ field }) => <Input {...field} label="Password" type="password" placeholder="Enter your password" autoComplete="current-password" error={errors.password?.message} />}
           />
 
-          <div
-            title="temporary not available"
-            className="mt-1 flex justify-end"
-          >
-            <NavLink
-              to="/forgot-password"
-              onClick={(e) => e.preventDefault()}
-              className="pointer-events-none cursor-not-allowed text-sm text-muted opacity-60"
-              aria-disabled="true"
-            >
+          <div title="temporary not available" className="mt-1 flex justify-end">
+            <NavLink to="/forgot-password" onClick={(e) => e.preventDefault()} className="pointer-events-none cursor-not-allowed text-sm text-muted opacity-60" aria-disabled="true">
               Forgot Password?
             </NavLink>
           </div>
@@ -124,10 +94,7 @@ const Login = () => {
         <div>
           <p className="mt-6 text-center text-sm text-muted">
             Don&apos;t have an account ?{" "}
-            <NavLink
-              to={"/signup"}
-              className={"hover:underline hover:text-blue-600"}
-            >
+            <NavLink to={"/signup"} className={"hover:underline hover:text-blue-600"}>
               SignUp
             </NavLink>
           </p>

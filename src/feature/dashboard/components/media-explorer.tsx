@@ -82,7 +82,6 @@ const ViewAllMedia = ({ mailboxId }: Props) => {
   }
 
   const attachments = data?.items ?? [];
-  console.log(attachments);
 
   return (
     <div className="flex h-[90vh] min-h-0 w-full flex-col overflow-hidden">
@@ -121,7 +120,7 @@ const ViewAllMedia = ({ mailboxId }: Props) => {
             </div>
           </div>
         ) : (
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {attachments.map((attachment) => {
               const type = getFileType(attachment.content_type);
 

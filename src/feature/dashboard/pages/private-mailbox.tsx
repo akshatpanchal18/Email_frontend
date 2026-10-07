@@ -7,7 +7,6 @@ import Logout from "../../auth/components/logout-dialog";
 import { useLogoutMutation } from "../../../store/api/authApi";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { LeftRail } from "../../../layout/root-layout";
 
 const PrivateInbox = () => {
   const navigate = useNavigate();
@@ -52,23 +51,26 @@ const PrivateInbox = () => {
 
   return (
     <>
-      <LeftRail>
-        <MailboxCard
-          address={mailbox.address}
-          loading={false}
-          onManageProfile={() =>
-            navigate("/d/profile", {
-              state: {
-                mailboxId: mailbox?.id,
-              },
-            })
-          }
-          onLogout={handleOpenLogoutModel}
-        />
-      </LeftRail>
+      <div className="grid h-full min-h-0 gap-4 lg:grid-cols-[320px_minmax(0,1fr)]">
+        <div>
+          <MailboxCard
+            address={mailbox.address}
+            loading={false}
+            onManageProfile={() =>
+              navigate("/d/profile", {
+                state: {
+                  mailboxId: mailbox?.id,
+                },
+              })
+            }
+            onLogout={handleOpenLogoutModel}
+          />
+        </div>
+        {/* </LeftRail> */}
 
-      <div className="h-full min-w-0">
-        <Inbox mailboxId={mailbox.id} />
+        <div className="h-full min-w-0">
+          <Inbox mailboxId={mailbox.id} />
+        </div>
       </div>
 
       <Modal size="content" loading={logoutLoading} open={isLogoutModelOpen} onClose={() => setIsLogoutModelOpen(false)}>

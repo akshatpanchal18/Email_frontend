@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { LuCheck, LuCopy, LuMail, LuSparkles } from "react-icons/lu";
+import { LuCheck, LuCopy, LuInbox, LuMail, LuSettings, LuSparkles, LuStar } from "react-icons/lu";
 
 interface AddressInfoProps {
   address: string;
@@ -25,53 +25,59 @@ const AddressInfo = ({ address, loading }: AddressInfoProps) => {
   };
 
   return (
-    <div className="mx-auto w-full max-w-xl rounded-xl border border-border bg-surface p-4 shadow-sm">
-      <div className="flex items-center gap-3">
-        {/* Icon */}
-        <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
-          <LuMail size={19} />
+    <aside className="w-full rounded-xl border border-border bg-surface p-3 shadow-sm">
+      {/* ================= MAILBOX HEADER ================= */}
+      <div className="flex items-center gap-4 px-1 py-1">
+        <div className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-surface-hover text-text-secondary">
+          <LuMail size={20} strokeWidth={1.8} />
         </div>
 
-        {/* Address */}
         <div className="min-w-0 flex-1">
           <div className="mb-1 flex items-center gap-2">
             <span className="text-xs font-medium uppercase tracking-wide text-text-muted">Guest mailbox</span>
 
-            <span className="rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-medium text-amber-700">Temporary</span>
+            <span className="rounded-full bg-amber-100 px-2.5 py-1 text-[10px] font-medium text-amber-700">Temporary</span>
           </div>
 
-          {loading ? (
-            <div className="h-5 w-48 animate-pulse rounded bg-gray-200" />
-          ) : (
-            <p title={address} className="truncate text-sm font-semibold text-text-primary">
-              {address}
-            </p>
-          )}
+          <p title={address} className="truncate text-sm font-semibold text-text-primary">
+            {address}
+          </p>
         </div>
 
-        {/* Copy */}
-        {!loading && (
-          <button
-            type="button"
-            onClick={copyAddress}
-            disabled={copied}
-            aria-label={copied ? "Address copied" : "Copy email address"}
-            className="flex size-9 shrink-0 items-center justify-center rounded-md border border-border text-text-secondary transition-colors hover:bg-surface-hover hover:text-text-primary disabled:cursor-default"
-          >
-            {copied ? <LuCheck size={15} className="text-green-600" /> : <LuCopy size={15} />}
-          </button>
-        )}
+        <button
+          type="button"
+          onClick={copyAddress}
+          disabled={copied}
+          className="flex size-10 shrink-0 items-center justify-center rounded-xl border border-border text-text-secondary transition-colors hover:bg-surface-hover hover:text-text-primary"
+        >
+          {copied ? <LuCheck size={17} className="text-green-600" /> : <LuCopy size={17} />}
+        </button>
       </div>
 
-      {/* Guest message */}
-      {!loading && (
-        <div className="mt-3 flex items-start gap-2 rounded-lg bg-surface-hover px-3 py-2.5">
-          <LuSparkles size={15} className="mt-0.5 shrink-0 text-text-muted" />
+      {/* ================= DIVIDER ================= */}
+      <div className="my-3 border-t border-border" />
 
-          <p className="text-xs leading-5 text-text-muted">You're using a guest mailbox. Create an account to keep your mailbox and access your emails later.</p>
+      {/* ================= GUEST MESSAGE ================= */}
+      {!loading && (
+        <div className="mt-4 rounded-xl bg-surface-hover px-4 py-3.5">
+          <div className="flex items-start gap-3">
+            <div className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-full bg-amber-100 text-amber-600">
+              <LuSparkles size={20} />
+            </div>
+
+            <div>
+              <p className="text-sm font-semibold text-text-primary">You're using a guest mailbox.</p>
+
+              <p className="mt-1 text-sm leading-5 text-text-muted">Create an account to keep your mailbox and access your emails later.</p>
+
+              <button type="button" className="mt-2 text-lg font-medium text-primary underline underline-offset-2">
+                Create an account
+              </button>
+            </div>
+          </div>
         </div>
       )}
-    </div>
+    </aside>
   );
 };
 

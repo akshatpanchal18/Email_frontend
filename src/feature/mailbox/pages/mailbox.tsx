@@ -3,7 +3,6 @@ import Inbox from "./inbox";
 import { useGetMailboxQuery } from "../../../store/api/mailboxApi";
 import AddressInfo from "../components/address-info";
 import ErrorMessage from "../components/error-message";
-import { LeftRail } from "../../../layout/root-layout";
 
 const Mailbox = () => {
   const { id } = useParams<{ id: string }>();
@@ -13,15 +12,13 @@ const Mailbox = () => {
   if (!id) return <div>Mailbox address is missing</div>;
 
   return (
-    <>
-      <LeftRail>
-        <AddressInfo address={mailbox?.address ?? ""} loading={isLoading} />
-      </LeftRail>
+    <div className="grid h-full min-h-0 gap-4 lg:grid-cols-[320px_minmax(0,1fr)]">
+      <AddressInfo address={mailbox?.address ?? ""} loading={isLoading} />
 
-      <div className="h-full min-w-0">
+      <div className="min-w-0 min-h-0">
         <Inbox mailboxId={mailbox?.id ?? ""} />
       </div>
-    </>
+    </div>
   );
 };
 
